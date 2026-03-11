@@ -1,5 +1,4 @@
-ESX = nil
-TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
+ESX = exports["es_extended"]:getSharedObject()
 
 local SpawnedProps = {}
 local PropCounter = 0
@@ -148,7 +147,7 @@ end)
 
 Citizen.CreateThread(function()
     while true do
-        Citizen.Wait(10 * 60000) -- Check every 10 mins
+        Citizen.Wait(10 * 60000) 
         local players = GetPlayers()
         local count = 0
         

@@ -1,7 +1,8 @@
 Config = {}
 
-Config.MenuCommand = "menuprops"
-Config.MenuKey = 166 -- Key F5 (set to nil if not wanted)
+Config.MenuCommand = "propsmenu"
+Config.MenuKey = 56 -- Key F9 (This is the control code for F9)
+Config.DefaultKey = "F9" -- Default key for RegisterKeyMapping
 Config.MaxPropsPerPlayer = 15 -- Nombre maximum de props qu'un joueur peut poser simultanément
 
 Config.ColorMenuR = 0

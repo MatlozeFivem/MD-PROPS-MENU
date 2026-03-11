@@ -10,12 +10,9 @@ function LoadMyScenes()
     end)
 end
 
+ESX = exports["es_extended"]:getSharedObject()
+
 Citizen.CreateThread(function()
-    while ESX == nil do
-        TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
-        Citizen.Wait(100)
-    end
-    
     if ESX.IsPlayerLoaded() then
         PlayerData = ESX.GetPlayerData()
         CheckAdminStatus()
@@ -161,7 +158,7 @@ function OpenPropsMenu()
                             ESX.TriggerServerCallback('md_props:saveScene', function(success, msg)
                                 if success then
                                     ESX.ShowNotification("~g~" .. msg)
-                                    LoadMyScenes() -- Refresh
+                                    LoadMyScenes() 
                                 else
                                     ESX.ShowNotification("~r~" .. msg)
                                 end
@@ -216,7 +213,7 @@ RegisterCommand(Config.MenuCommand, function()
 end, false)
 
 if Config.MenuKey then
-    RegisterKeyMapping(Config.MenuCommand, 'Ouvrir le menu Props', 'keyboard', 'F5') -- Fallback if not mapped
+    RegisterKeyMapping(Config.MenuCommand, 'Ouvrir le menu Props', 'keyboard', Config.DefaultKey or 'F9')
 end
 
 
@@ -301,8 +298,8 @@ function StartPlacingProp(modelName)
             
             if hit then
                 local snapped = false
-                if IsControlPressed(0, 21) then -- Left Shift to temporarily disable snap
-                    -- Do nothing, free placement
+                if IsControlPressed(0, 21) then 
+                    
                 else
                     for k, v in pairs(SpawnedPropsCache) do
                         if v and v.hash == hash then
@@ -347,27 +344,27 @@ function StartPlacingProp(modelName)
                 SetEntityCoordsNoOffset(GhostEntity, coords.x, coords.y, coords.z + PropZOffset, false, false, false)
                 SetEntityHeading(GhostEntity, PropHeading)
                 
-                DisableControlAction(0, 24, true) -- Attack (Left Click)
-                DisableControlAction(0, 25, true) -- Aim (Right Click)
-                DisableControlAction(0, 14, true) -- Scroll Up
-                DisableControlAction(0, 15, true) -- Scroll Down
+                DisableControlAction(0, 24, true) 
+                DisableControlAction(0, 25, true) 
+                DisableControlAction(0, 14, true) 
+                DisableControlAction(0, 15, true) 
                 
-                if IsDisabledControlPressed(0, 14) then -- Scroll up
+                if IsDisabledControlPressed(0, 14) then 
                     PropHeading = PropHeading + 5.0
                 end
                 
-                if IsDisabledControlPressed(0, 15) then -- Scroll down
+                if IsDisabledControlPressed(0, 15) then 
                     PropHeading = PropHeading - 5.0
                 end
                 
-                if IsControlPressed(0, 172) then -- Arrow up
+                if IsControlPressed(0, 172) then 
                     PropZOffset = PropZOffset + 0.02
                 end
-                if IsControlPressed(0, 173) then -- Arrow down
+                if IsControlPressed(0, 173) then 
                     PropZOffset = PropZOffset - 0.02
                 end
                 
-                if IsDisabledControlJustPressed(0, 24) or IsControlJustPressed(0, 38) then -- Left Click or E
+                if IsDisabledControlJustPressed(0, 24) or IsControlJustPressed(0, 38) then 
                     PlacingProp = false
                     local finalCoords = GetEntityCoords(GhostEntity)
                     local finalHeading = GetEntityHeading(GhostEntity)
@@ -388,7 +385,7 @@ function StartPlacingProp(modelName)
                 
             end
 
-            if IsControlJustPressed(0, 177) or IsControlJustPressed(0, 200) then -- Backspace / ESC
+            if IsControlJustPressed(0, 177) or IsControlJustPressed(0, 200) then 
                 PlacingProp = false
                 DeleteEntity(GhostEntity)
                 GhostEntity = nil
@@ -617,7 +614,7 @@ Citizen.CreateThread(function()
                             DrawText3D(propCoords.x, propCoords.y, propCoords.z + (interactData.offsetZ or 0.5) + 0.3, interactData.label)
                             
                             if dist < 1.5 then
-                                if IsControlJustPressed(0, 38) then -- E
+                                if IsControlJustPressed(0, 38) then 
                                     isUsingProp = true
                                     currentPropEntity = ent
                                     local propHeading = GetEntityHeading(ent)
@@ -653,7 +650,7 @@ Citizen.CreateThread(function()
             AddTextComponentString("Appuyez sur ~INPUT_CONTEXT~ ou ~INPUT_VEH_DUCK~ pour vous lever.")
             DisplayHelpTextFromStringLabel(0, 0, 1, -1)
             
-            if IsControlJustPressed(0, 38) or IsControlJustPressed(0, 73) then -- E or X
+            if IsControlJustPressed(0, 38) or IsControlJustPressed(0, 73) then 
                 local ped = PlayerPedId()
                 FreezeEntityPosition(ped, false)
                 ClearPedTasks(ped)
